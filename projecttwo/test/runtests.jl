@@ -1,11 +1,11 @@
 using projecttwo, Test
 
-@testset "hillclimb" begin
-	f = x-> x^4 + 3x^3 + x^2 + sin(x)
-	a, b = -10, 10
-	@test abs(mini(f, a, b) + 1.97) <= 0.01
+@testset "Single variable optimizers" begin
 
-	f = x-> x^2
-	a, b = -5, 5
-	@test abs(mini(f, a, b)) <= 0.01
+	@testset "Tolerance tests" begin
+		for tolerance in [1, 0.5, 1e-1]
+			@test isapprox(line_optimize(x -> x^2 - 1, -5, 5), 0.0, atol = tolerance)
+			@test isapprox(line_optimize(x -> x^2 - 2x, -5, 5), 1.0, atol = tolerance)
+		end
+	end
 end
